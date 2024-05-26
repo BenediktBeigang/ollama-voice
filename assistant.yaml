@@ -1,18 +1,18 @@
 messages:
-  pressSpace: "Pressez sur espace pour parler puis relachez."
-  loadingModel: "Chargement du modèle..."
-  noAudioInput: "Erreur: Pas d'entrée son"
+  pressSpace: "Press space if you want to talk and get dissapointed"
+  loadingModel: "I load the knowlage of the universe in my brain"
+  noAudioInput: "You idiot forgot to plug in your microphone"
 
 whisperRecognition:
   modelPath: "whisper/large-v3.pt"
-  lang: "fr"
+  lang: "en"
 
 ollama:
   url: "http://localhost:11434/api/generate"
-  model: "mistral"
+  model: "llama3"
 
 conversation:
-  context: "Cette conversasion est intégralement en français."
-  greeting: "Je vous écoute."
-  recognitionWaitMsg: "Oui."
-  llmWaitMsg: "Laissez moi réfléchir."
+  context: "This conversation is in your language."
+  greeting: "I hear what you say, but I dont listen..."
+  recognitionWaitMsg: "Yes [sigh]"
+  llmWaitMsg: "I have to think about that for 7.8 Billion years"

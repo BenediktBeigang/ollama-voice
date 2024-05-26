@@ -12,6 +12,16 @@ from yaml import Loader
 import pygame, sys
 import pygame.locals
 
+from elevenlabs import play
+from elevenlabs.client import ElevenLabs
+
+with open("credentials.json") as f:
+    credentials = json.load(f)
+    api_key = credentials["elevenlabs_api_key"]
+    client = ElevenLabs(
+        api_key=api_key,
+    )
+
 BACK_COLOR = (0,0,0)
 REC_COLOR = (255,0,0)
 TEXT_COLOR = (255,255,255)
@@ -63,14 +73,14 @@ class Assistant:
         except :        
             self.wait_exit()
 
-        self.text_to_speech(self.config.messages.loadingModel)
+        self.text_to_speech_elevenlabs(self.config.messages.loadingModel)
         self.display_message(self.config.messages.loadingModel)
         self.model = whisper.load_model(self.config.whisperRecognition.modelPath)
         #self.conversation_history = [self.config.conversation.context,
         #                             self.config.conversation.greeting]
         self.context = []
 
-        self.text_to_speech(self.config.conversation.greeting)
+        self.text_to_speech_elevenlabs(self.config.conversation.greeting)
         self.display_message(self.config.messages.pressSpace)
 
     def wait_exit(self):
@@ -147,7 +157,9 @@ class Assistant:
             
             mid = int(np.ceil(count/2))
             for i in range(0, mid):
-                color = (RED_CENTER+(FACTOR*(i % mid)), 0, 0)
+                red_value = RED_CENTER+(FACTOR*(i % mid))
+                red_value = min(max(red_value, 0), 255)
+                color = (red_value, 0, 0)
                 offset = i*(KHEIGHT+vspace)
                 pygame.draw.rect(self.windowSurface, color, 
                                 rect_coords(x, y+offset))
@@ -196,13 +208,13 @@ class Assistant:
         return np.frombuffer(b''.join(frames), np.int16).astype(np.float32) * (1 / 32768.0)
 
     def speech_to_text(self, waveform):
-        self.text_to_speech(self.config.conversation.recognitionWaitMsg)    
+        self.text_to_speech_elevenlabs(self.config.conversation.recognitionWaitMsg)    
 
         transcript = self.model.transcribe(waveform, 
                                            language = self.config.whisperRecognition.lang, 
                                            fp16=torch.cuda.is_available())
         text = transcript["text"]
-        self.text_to_speech(text)
+        self.text_to_speech_elevenlabs(text)
         return text
     
     
@@ -222,7 +234,7 @@ class Assistant:
         response.raise_for_status()
 
         #print(jsonParam)
-        self.text_to_speech(self.config.conversation.llmWaitMsg)    
+        self.text_to_speech_elevenlabs(self.config.conversation.llmWaitMsg)    
 
         tokens = []
         for line in response.iter_lines():
@@ -242,6 +254,14 @@ class Assistant:
 
             if body.get('done', False):
                 self.context = body['context']
+
+    def text_to_speech_elevenlabs(self, text):
+        audio = client.generate(
+        text=text,
+        voice="Marvin",
+        model="eleven_multilingual_v2"
+        )
+        play(audio)
 
     def text_to_speech(self, text):
         print(text)
@@ -287,7 +307,7 @@ def main():
 
                 transcription = ass.speech_to_text(waveform=speech)
                 
-                ass.ask_ollama(transcription, ass.text_to_speech)
+                ass.ask_ollama(transcription, ass.text_to_speech_elevenlabs)
                 
                 ass.display_message(ass.config.messages.pressSpace)
 
