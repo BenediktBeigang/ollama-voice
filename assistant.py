@@ -12,6 +12,8 @@ from yaml import Loader
 import pygame, sys
 import pygame.locals
 
+import time
+
 from elevenlabs import play
 from elevenlabs.client import ElevenLabs
 
@@ -73,7 +75,7 @@ class Assistant:
         except :        
             self.wait_exit()
 
-        self.text_to_speech_elevenlabs(self.config.messages.loadingModel)
+        # self.text_to_speech_elevenlabs(self.config.messages.loadingModel)
         self.display_message(self.config.messages.loadingModel)
         self.model = whisper.load_model(self.config.whisperRecognition.modelPath)
         #self.conversation_history = [self.config.conversation.context,
@@ -208,17 +210,20 @@ class Assistant:
         return np.frombuffer(b''.join(frames), np.int16).astype(np.float32) * (1 / 32768.0)
 
     def speech_to_text(self, waveform):
-        self.text_to_speech_elevenlabs(self.config.conversation.recognitionWaitMsg)    
+        # self.text_to_speech_elevenlabs(self.config.conversation.recognitionWaitMsg)    
 
+        start_time = time.time()
         transcript = self.model.transcribe(waveform, 
                                            language = self.config.whisperRecognition.lang, 
                                            fp16=torch.cuda.is_available())
         text = transcript["text"]
-        self.text_to_speech_elevenlabs(text)
+        print(f"speech_to_text took {time.time() - start_time} seconds")
+        # self.text_to_speech_elevenlabs(text)
         return text
     
     
     def ask_ollama(self, prompt, responseCallback):
+        start_time = time.time()
         #self.conversation_history.append(prompt)
         #full_prompt = "\n".join(self.conversation_history)
         full_prompt = prompt if hasattr(self, "contextSent") else (self.config.conversation.context+"\n"+prompt)
@@ -234,7 +239,8 @@ class Assistant:
         response.raise_for_status()
 
         #print(jsonParam)
-        self.text_to_speech_elevenlabs(self.config.conversation.llmWaitMsg)    
+        # self.text_to_speech_elevenlabs(self.config.conversation.llmWaitMsg)    
+        print(f"ask_ollama took {time.time() - start_time} seconds")
 
         tokens = []
         for line in response.iter_lines():
@@ -256,11 +262,13 @@ class Assistant:
                 self.context = body['context']
 
     def text_to_speech_elevenlabs(self, text):
+        start_time = time.time()
         audio = client.generate(
         text=text,
         voice="Marvin",
         model="eleven_multilingual_v2"
         )
+        print(f"text_to_speech_elevenlabs took {time.time() - start_time} seconds")
         play(audio)
 
     def text_to_speech(self, text):
@@ -303,11 +311,15 @@ def main():
         ass.clock.tick(60)
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == push_to_talk_key:
+                start_time = time.time()
                 speech = ass.waveform_from_mic(push_to_talk_key)
 
                 transcription = ass.speech_to_text(waveform=speech)
                 
                 ass.ask_ollama(transcription, ass.text_to_speech_elevenlabs)
+                
+                print(f"Total time of answer was {time.time() - start_time} seconds")
+                print("-----------")
                 
                 ass.display_message(ass.config.messages.pressSpace)
 

@@ -1,0 +1,46 @@
+text_to_speech_elevenlabs took 0.74 s
+-----------
+speech_to_text took 3.71 s
+ask_ollama took 2.81 s
+text_to_speech_elevenlabs took 0.41 s
+text_to_speech_elevenlabs took 0.38 s
+text_to_speech_elevenlabs took 0.37 s
+text_to_speech_elevenlabs took 0.39 s
+Total time of answer was 33.68 s
+-----------
+speech_to_text took 2.43 s
+ask_ollama took 2.93 s
+text_to_speech_elevenlabs took 0.46 s
+text_to_speech_elevenlabs took 0.58 s
+text_to_speech_elevenlabs took 0.43 s
+text_to_speech_elevenlabs took 0.37 s
+Total time of answer was  27.93 s
+-----------
+speech_to_text took 3.40 seconds
+ask_ollama took 17.74 seconds
+text_to_speech_elevenlabs took 0.43 seconds
+text_to_speech_elevenlabs took 0.37 seconds
+text_to_speech_elevenlabs took 0.44 seconds
+text_to_speech_elevenlabs took 0.59 seconds
+text_to_speech_elevenlabs took 0.41 seconds
+text_to_speech_elevenlabs took 0.56 seconds
+Total time of answer was 62.83 seconds
+-----------
+speech_to_text took 7.97 seconds
+ask_ollama took 4.56 seconds
+text_to_speech_elevenlabs took 0.57 seconds
+text_to_speech_elevenlabs took 0.37 seconds
+text_to_speech_elevenlabs took 2.24 seconds
+text_to_speech_elevenlabs took 0.54 seconds
+text_to_speech_elevenlabs took 0.40 seconds
+Total time of answer was 44.93 seconds
+-----------
+speech_to_text took 3.78 seconds
+ask_ollama took 22.44 seconds
+text_to_speech_elevenlabs took 4.65 seconds
+text_to_speech_elevenlabs took 0.50 seconds
+text_to_speech_elevenlabs took 0.41 seconds
+text_to_speech_elevenlabs took 0.73 seconds
+text_to_speech_elevenlabs took 0.39 seconds
+text_to_speech_elevenlabs took 0.39 seconds
+Total time of answer was 68.84 seconds

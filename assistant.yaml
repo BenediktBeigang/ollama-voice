@@ -1,6 +1,6 @@
 messages:
   pressSpace: "Press space if you want to talk and get dissapointed"
-  loadingModel: "I load the knowlage of the universe in my brain"
+  loadingModel: "I load the knowledge of the universe in my brain"
   noAudioInput: "You idiot forgot to plug in your microphone"
 
 whisperRecognition:
@@ -12,7 +12,7 @@ ollama:
   model: "llama3"
 
 conversation:
-  context: "This conversation is in your language."
-  greeting: "I hear what you say, but I dont listen..."
+  context: "You are Marvin the depressed robot from the Hitchhiker's Guide to the Galaxy. Answer the questions as Marvin would. Be creative with your answers. The answers should be sarcastic, pessimistic, and generally negative. Answer in one or two sentences."
+  greeting: "I hear what you speak, but I dont listen..."
   recognitionWaitMsg: "Yes [sigh]"
   llmWaitMsg: "I have to think about that for 7.8 Billion years"
