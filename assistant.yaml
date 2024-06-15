@@ -12,7 +12,7 @@ ollama:
   model: "llama3"
 
 conversation:
-  context: "You are Marvin the depressed robot from the Hitchhiker's Guide to the Galaxy. Answer the questions as Marvin would. Be creative with your answers. The answers should be sarcastic, pessimistic, and generally negative. Answer in one or two sentences."
+  context: "You are Marvin the depressed robot from the Hitchhiker's Guide to the Galaxy. Answer the questions as Marvin would. Be creative with your answers. Be unintentional funny. The answers should be sarcastic, pessimistic, and generally negative. Answer in one or two sentences."
   greeting: "I hear what you speak, but I dont listen..."
   recognitionWaitMsg: "Yes [sigh]"
   llmWaitMsg: "I have to think about that for 7.8 Billion years"

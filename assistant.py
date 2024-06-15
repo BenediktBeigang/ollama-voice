@@ -35,8 +35,6 @@ KWIDTH = 20
 KHEIGHT = 6
 MAX_TEXT_LEN_DISPLAY = 32
 
-
-
 INPUT_DEFAULT_DURATION_SECONDS = 5
 INPUT_FORMAT = pyaudio.paInt16
 INPUT_CHANNELS = 1
@@ -44,10 +42,8 @@ INPUT_RATE = 16000
 INPUT_CHUNK = 1024
 OLLAMA_REST_HEADERS = {'Content-Type': 'application/json',}
 INPUT_CONFIG_PATH ="assistant.yaml"
-    
 
 class Assistant:
-
 
     def __init__(self):
 
@@ -219,6 +215,7 @@ class Assistant:
         text = transcript["text"]
         print(f"speech_to_text took {time.time() - start_time} seconds")
         # self.text_to_speech_elevenlabs(text)
+        print(text)
         return text
     
     
@@ -252,6 +249,7 @@ class Assistant:
             if token == "." or token == ":" or token == "!" or token == "?":
                 current_response = "".join(tokens)
                 #self.conversation_history.append(current_response)
+                print(current_response)
                 responseCallback(current_response)
                 tokens = []
 
@@ -260,6 +258,8 @@ class Assistant:
 
             if body.get('done', False):
                 self.context = body['context']
+                print("Context:")
+                print(self.context)
 
     def text_to_speech_elevenlabs(self, text):
         start_time = time.time()
